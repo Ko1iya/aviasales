@@ -1,0 +1,27 @@
+.filters {
+  background: #fff;
+  border-radius: 5px;
+  padding: 20px;
+  height: 220px;
+
+  h3 {
+    margin: 0 0 10px;
+    font-size: 12px;
+    font-weight: 600;
+  }
+
+  label {
+    display: flex;
+    align-items: center;
+    padding: 10px 0;
+    cursor: pointer;
+
+    input {
+      margin-right: 10px;
+    }
+
+    span {
+      font-size: 13px;
+    }
+  }
+}

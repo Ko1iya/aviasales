@@ -1,0 +1,26 @@
+.tabs {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+
+  button {
+    padding: 15px;
+    border: 1px solid #dfe5ec;
+    background: #fff;
+    font-size: 12px;
+    font-weight: 300;
+    cursor: pointer;
+
+    &:first-child {
+      border-radius: 5px 0 0 5px;
+    }
+
+    &:last-child {
+      border-radius: 0 5px 5px 0;
+    }
+
+    &.tabActive {
+      background: #2196f3;
+      color: #fff;
+    }
+  }
+}

@@ -1,0 +1,41 @@
+// components/TicketList/ticketList.module.scss
+.container {
+  max-width: 754px;
+  margin: 0 auto;
+  padding: 20px 20px 20px 20px;
+  display: grid;
+  grid-template-columns: 232px 1fr;
+  gap: 20px;
+  background-color: rgba(243, 247, 250, 1);
+
+  @media (max-width: 768px) {
+    grid-template-columns: 1fr;
+  }
+}
+
+.content {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.tickets {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.showMore {
+  background: #2196f3;
+  color: #fff;
+  border: none;
+  border-radius: 5px;
+  padding: 15px;
+  font-size: 12px;
+  font-weight: 600;
+  cursor: pointer;
+
+  &:hover {
+    background: darken(#2196f3, 5%);
+  }
+}
