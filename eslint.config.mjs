@@ -54,6 +54,7 @@ export default [
           component: false,
         },
       ],
+      'default-param-last': ['warn'],
     },
   },
 

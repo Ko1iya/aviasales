@@ -14,8 +14,7 @@ function TicketList() {
           <TicketCard />
           <TicketCard />
           <TicketCard />
-          <TicketCard />
-          <TicketCard />
+
           {/* Дополнительные билеты */}
         </div>
         <button type="button" className={styles.showMore}>

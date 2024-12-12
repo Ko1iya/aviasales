@@ -2,13 +2,14 @@
 import React from 'react';
 import FlightSegment from '../FlightSegment/FlightSegment';
 import styles from './ticketCard.module.scss';
+import s7logo from '@/assets/s7logo.png';
 
 function TicketCard() {
   return (
     <div className={styles.ticket}>
       <div className={styles.header}>
         <span className={styles.price}>13 400 Р</span>
-        <img src="/s7-logo.png" alt="S7 Airlines" />
+        <img src={s7logo} alt="S7 Airlines" />
       </div>
 
       <div className={styles.info}>
