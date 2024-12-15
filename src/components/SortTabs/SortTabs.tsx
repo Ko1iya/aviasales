@@ -1,15 +1,16 @@
 import React from 'react';
-import { useSelector, useDispatch } from 'react-redux';
+
 import styles from './sortTabs.module.scss';
-import { sortState } from '@/types/typesRedux';
+
 import { sortToggle } from '@/store/reducers/sortReducer';
+import { useAppDispatch, useAppSelector } from '@/hooks/redux';
 
 function SortTabs() {
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
 
-  const state = useSelector((curentState: { sort: sortState }) => curentState);
+  const state = useAppSelector((stateParam) => stateParam.sort);
 
-  const currentSort = state.sort.sort;
+  const currentSort = state.sort;
 
   const changeSort = (newState: string) => {
     dispatch(sortToggle(newState));

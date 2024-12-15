@@ -1,10 +1,14 @@
 import { combineReducers } from 'redux';
 import { filterReducer } from './countReducer';
 import { sortReducer } from './sortReducer';
+import ticketReducer from './ticketReducer';
 
 const rootReducer = combineReducers({
-  filter: filterReducer,
   sort: sortReducer,
+  filterReducer,
+  ticketReducer,
 });
 
-export default rootReducer;
+type RootState = ReturnType<typeof rootReducer>;
+
+export { rootReducer, RootState };

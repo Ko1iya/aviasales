@@ -72,6 +72,7 @@
   },
   "dependencies": {
     "@redux-devtools/extension": "^3.3.0",
+    "@reduxjs/toolkit": "^2.5.0",
     "@svgr/webpack": "^8.1.0",
     "@types/babel__core": "^7.20.3",
     "@types/react-redux": "^7.1.34",

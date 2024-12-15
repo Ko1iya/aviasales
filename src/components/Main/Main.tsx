@@ -1,9 +1,9 @@
 import TicketList from '../TicketList/TicketList';
 import styles from './main.module.scss';
 
-interface MainProps {}
+// interface MainProps {}
 
-function Main(prop: MainProps) {
+function Main() {
   return (
     <div className={styles.main}>
       <TicketList></TicketList>

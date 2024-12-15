@@ -1,10 +1,5 @@
-import { filterAction, filterState } from '@/types/typesRedux';
-
-const FILTER_TOGGLE_ALL = 'FILTER_TOGGLE_ALL';
-const FILTER_TOGGLE_WITHOUT = 'FILTER_TOGGLE_WITHOUT';
-const FILTER_TOGGLE_ONE = 'FILTER_TOGGLE_ONE';
-const FILTER_TOGGLE_TWO = 'FILTER_TOGGLE_TWO';
-const FILTER_TOGGLE_THREE = 'FILTER_TOGGLE_THREE';
+import { createSlice } from '@reduxjs/toolkit';
+import { filterState } from '@/types/typesRedux';
 
 const initialState: filterState = {
   all: true,
@@ -53,38 +48,26 @@ function returnFilterState(state: filterState, filter: string): filterState {
   return { ...state };
 }
 
-const filterReducer = (
-  state = initialState,
-  action: filterAction,
-): filterState => {
-  switch (action.type) {
-    case FILTER_TOGGLE_ALL:
-      return returnFilterState(state, 'all');
+const filterSlice = createSlice({
+  name: 'filterSlice',
+  initialState,
+  reducers: {
+    toggleAllSlice: (state) => returnFilterState(state, 'all'),
+    toggleWithout: (state) => returnFilterState(state, 'without'),
+    toggleOne: (state) => returnFilterState(state, 'one'),
+    toggleTwo: (state) => returnFilterState(state, 'two'),
+    toggleThree: (state) => returnFilterState(state, 'three'),
+  },
+});
 
-    case FILTER_TOGGLE_ONE:
-      return returnFilterState(state, 'one');
-    case FILTER_TOGGLE_TWO:
-      return returnFilterState(state, 'two');
-    case FILTER_TOGGLE_THREE:
-      return returnFilterState(state, 'three');
-    case FILTER_TOGGLE_WITHOUT:
-      return returnFilterState(state, 'without');
-    default:
-      return state;
-  }
-};
-
-const toggleAll = () => ({ type: FILTER_TOGGLE_ALL });
-const toggleWithout = () => ({ type: FILTER_TOGGLE_WITHOUT });
-const toggleOne = () => ({ type: FILTER_TOGGLE_ONE });
-const toggleTwo = () => ({ type: FILTER_TOGGLE_TWO });
-const toggleThree = () => ({ type: FILTER_TOGGLE_THREE });
-
-export {
-  filterReducer,
-  toggleAll,
+export const {
+  toggleAllSlice,
   toggleWithout,
   toggleOne,
   toggleTwo,
   toggleThree,
-};
+} = filterSlice.actions;
+
+const filterReducer = filterSlice.reducer;
+
+export { filterReducer };
