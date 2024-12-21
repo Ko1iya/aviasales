@@ -1,16 +1,17 @@
+// src/store/reducers/ticketReducer.ts
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { ListTickets } from '@/types';
 
 /* eslint-disable no-param-reassign */
 interface TicketState {
-  tickets: ListTickets;
+  ticketsObj: ListTickets;
   loading: boolean;
   error: unknown;
   searchId: string;
 }
 
 const initialState: TicketState = {
-  tickets: {
+  ticketsObj: {
     tickets: [],
     stop: false,
   },
@@ -23,27 +24,69 @@ const ticketSlice = createSlice({
   name: 'ticketSlice',
   initialState,
   reducers: {
-    ticketFetching: (state: TicketState) => ({
+    searchIdFetching: (state: TicketState) => ({
       ...state,
       loading: true,
     }),
-    ticketFetchingSuccess: (
-      state: TicketState,
-      action: PayloadAction<TicketState>,
-    ) => {
-      state.searchId = action.payload.searchId;
-      state.loading = false;
-    },
-    ticketFetchingError: (
+
+    searchIdFetchingError: (
       state: TicketState,
       action: PayloadAction<unknown>,
     ) => {
       state.error = action.payload;
       state.loading = false;
     },
+    searchIdFetchingSuccess: (
+      state: TicketState,
+      action: PayloadAction<string>,
+    ) => {
+      state.searchId = action.payload;
+      state.loading = false;
+    },
+
+    ticketsFetchingSuccess: (
+      state: TicketState,
+      action: PayloadAction<ListTickets>,
+    ) => {
+      const { stop } = action.payload;
+      // For global env PRODUCTION
+      // eslint-disable-next-line no-undef
+      const countTicket = !PRODUCTION ? 15000 : 2000;
+      const stoped =
+        state.ticketsObj.tickets.length > countTicket ? true : stop;
+      let result: TicketState = {
+        ...state,
+      };
+
+      if (state.ticketsObj.tickets.length > 0 && !stoped) {
+        result = {
+          ticketsObj: {
+            stop: stoped,
+            tickets: [...action.payload.tickets, ...state.ticketsObj.tickets],
+          },
+          loading: false,
+          error: null,
+          searchId: state.searchId,
+        };
+      } else if (state.ticketsObj.tickets.length === 0) {
+        result = {
+          ticketsObj: action.payload,
+          loading: false,
+          error: null,
+          searchId: state.searchId,
+        };
+      }
+
+      return result;
+    },
   },
 });
 
-export const { ticketFetching, ticketFetchingSuccess, ticketFetchingError } =
-  ticketSlice.actions;
+export const {
+  searchIdFetching,
+  searchIdFetchingSuccess,
+  searchIdFetchingError,
+  ticketsFetchingSuccess,
+} = ticketSlice.actions;
 export default ticketSlice.reducer;
+export type { TicketState };

@@ -1,5 +1,5 @@
 import { combineReducers } from 'redux';
-import { filterReducer } from './countReducer';
+import { filterReducer } from './filterReducer';
 import { sortReducer } from './sortReducer';
 import ticketReducer from './ticketReducer';
 

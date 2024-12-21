@@ -3,6 +3,7 @@ import { createHashRouter, RouterProvider } from 'react-router-dom';
 import { Provider } from 'react-redux';
 
 // import { Suspense } from 'react';
+import { StrictMode } from 'react';
 import App from './components/App/App';
 import ErrorPage from './errorPage';
 import './index.css';
@@ -25,7 +26,9 @@ if (!root) {
 const container = createRoot(root);
 
 container.render(
-  <Provider store={setupStore()}>
-    <RouterProvider router={router} />
-  </Provider>,
+  <StrictMode>
+    <Provider store={setupStore()}>
+      <RouterProvider router={router} />
+    </Provider>
+  </StrictMode>,
 );

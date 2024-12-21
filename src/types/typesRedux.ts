@@ -8,11 +8,6 @@ export interface filterState {
   three: boolean;
 }
 
-export interface filterAction {
-  type: string;
-  payload: any;
-}
-
 export interface sortState {
   sort: 'cheap' | 'fast' | 'optimal';
 }
