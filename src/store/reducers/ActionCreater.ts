@@ -10,21 +10,37 @@ import {
 const fetchId = () => async (dispatch: AppDispatch) => {
   dispatch(searchIdFetching());
 
-  await fetch('https://aviasales-test-api.kata.academy/search')
-    .then((res) => res.json())
-    .then(({ searchId }) => {
-      dispatch(searchIdFetchingSuccess(searchId));
-    })
-    .catch((err) => dispatch(searchIdFetchingError(err)));
+  try {
+    const response = await fetch(
+      'https://aviasales-test-api.kata.academy/search',
+    );
+
+    if (!response.ok) {
+      throw new Error(`HTTP error! status: ${response.status}`);
+    }
+
+    const { searchId } = await response.json();
+    dispatch(searchIdFetchingSuccess(searchId));
+  } catch (err) {
+    dispatch(searchIdFetchingError(err.message));
+  }
 };
 
 const fetchSearchId = (searchId: string) => async (dispatch: AppDispatch) => {
-  await fetch(
-    `https://aviasales-test-api.kata.academy/tickets?searchId=${searchId}`,
-  )
-    .then((response) => response.json())
-    .then((jsonTic) => dispatch(ticketsFetchingSuccess(jsonTic)))
-    .catch((err) => dispatch(searchIdFetchingError(err)));
+  try {
+    const response = await fetch(
+      `https://aviasales-test-api.kata.academy/tickets?searchId=${searchId}`,
+    );
+
+    if (!response.ok) {
+      throw new Error(`HTTP error! status: ${response.status}`);
+    }
+
+    const jsonTic = await response.json();
+    dispatch(ticketsFetchingSuccess(jsonTic));
+  } catch (err) {
+    dispatch(searchIdFetchingError(err.message));
+  }
 };
 
 export { fetchId, fetchSearchId };

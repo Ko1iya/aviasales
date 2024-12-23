@@ -8,6 +8,7 @@ interface TicketState {
   loading: boolean;
   error: unknown;
   searchId: string;
+  quantityRequest: number;
 }
 
 const initialState: TicketState = {
@@ -18,6 +19,7 @@ const initialState: TicketState = {
   loading: false,
   error: null,
   searchId: '',
+  quantityRequest: 0,
 };
 
 const ticketSlice = createSlice({
@@ -49,6 +51,7 @@ const ticketSlice = createSlice({
       action: PayloadAction<ListTickets>,
     ) => {
       const { stop } = action.payload;
+
       // For global env PRODUCTION
       // eslint-disable-next-line no-undef
       const countTicket = !PRODUCTION ? 15000 : 2000;
@@ -57,6 +60,23 @@ const ticketSlice = createSlice({
       let result: TicketState = {
         ...state,
       };
+
+      if (stoped) {
+        const newSortedTickets = [...state.ticketsObj.tickets].sort(
+          (a, b) => a.price - b.price,
+        );
+
+        result = {
+          ticketsObj: {
+            stop: stoped,
+            tickets: newSortedTickets,
+          },
+          loading: false,
+          error: null,
+          searchId: state.searchId,
+          quantityRequest: state.quantityRequest + 1,
+        };
+      }
 
       if (state.ticketsObj.tickets.length > 0 && !stoped) {
         result = {
@@ -67,6 +87,7 @@ const ticketSlice = createSlice({
           loading: false,
           error: null,
           searchId: state.searchId,
+          quantityRequest: state.quantityRequest + 1,
         };
       } else if (state.ticketsObj.tickets.length === 0) {
         result = {
@@ -74,6 +95,7 @@ const ticketSlice = createSlice({
           loading: false,
           error: null,
           searchId: state.searchId,
+          quantityRequest: state.quantityRequest + 1,
         };
       }
 

@@ -1,20 +1,26 @@
 // components/TicketList/TicketList.tsx
-import React, { useLayoutEffect } from 'react';
+import { v4 as uuidv4 } from 'uuid';
+import React, { useEffect } from 'react';
 import FilterPanel from '../FilterPanel/FilterPanel';
 import SortTabs from '../SortTabs/SortTabs';
 import TicketCard from '../TicketCard/TicketCard';
 import styles from './ticketList.module.scss';
 import { useAppDispatch, useAppSelector } from '@/hooks/redux';
 import { fetchId, fetchSearchId } from '@/store/reducers/ActionCreater';
+import { quantityChange } from '@/store/reducers/quantityTicketsReducer';
 
 function TicketList() {
   const state = useAppSelector((stateParam) => stateParam.ticketReducer);
+
+  const quantity = useAppSelector(
+    (stateParam) => stateParam.quantityReducer.quantity,
+  );
 
   const { loading, ticketsObj, error } = state;
 
   const dispatch = useAppDispatch();
 
-  useLayoutEffect(() => {
+  useEffect(() => {
     let mounted = true;
 
     const fetchData = () => {
@@ -32,13 +38,23 @@ function TicketList() {
     };
   }, [state.searchId, ticketsObj, error]);
 
+  const tickets = [];
+
+  for (let i = 0; i < ticketsObj.tickets.length; i += 1) {
+    if (i >= quantity) {
+      break;
+    }
+    const element = ticketsObj.tickets[i];
+    tickets.push(element);
+  }
+
   const ticketsList = loading ? (
     <div>loading</div>
   ) : (
     <div className={styles.tickets}>
-      <TicketCard />
-      <TicketCard />
-      <TicketCard />
+      {tickets.map((ticket) => (
+        <TicketCard key={uuidv4()} ticket={ticket} />
+      ))}
     </div>
   );
 
@@ -53,7 +69,7 @@ function TicketList() {
           type="button"
           className={styles.showMore}
           onClick={() => {
-            console.log(ticketsObj.tickets.length);
+            dispatch(quantityChange());
           }}
         >
           ПОКАЗАТЬ ЕЩЕ 5 БИЛЕТОВ!
