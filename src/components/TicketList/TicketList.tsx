@@ -8,6 +8,7 @@ import styles from './ticketList.module.scss';
 import { useAppDispatch, useAppSelector } from '@/hooks/redux';
 import { fetchId, fetchSearchId } from '@/store/reducers/ActionCreater';
 import { quantityChange } from '@/store/reducers/quantityTicketsReducer';
+import Spinner from '../Spinner/Spinner';
 
 function TicketList() {
   const state = useAppSelector((stateParam) => stateParam.ticketReducer);
@@ -33,6 +34,10 @@ function TicketList() {
 
     fetchData();
 
+    if (error !== 'HTTP error! status: 500' && error !== null) {
+      throw new Error(error);
+    }
+
     return () => {
       mounted = false;
     };
@@ -48,9 +53,7 @@ function TicketList() {
     tickets.push(element);
   }
 
-  const ticketsList = loading ? (
-    <div>loading</div>
-  ) : (
+  const ticketsList = loading ? null : (
     <div className={styles.tickets}>
       {tickets.map((ticket) => (
         <TicketCard key={uuidv4()} ticket={ticket} />
@@ -63,7 +66,7 @@ function TicketList() {
       <FilterPanel />
       <div className={styles.content}>
         <SortTabs />
-
+        {state.ticketsObj.stop || !loading ? null : <Spinner />}
         {ticketsList}
         <button
           type="button"

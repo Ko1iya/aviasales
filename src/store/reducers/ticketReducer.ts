@@ -6,7 +6,7 @@ import { ListTickets } from '@/types';
 interface TicketState {
   ticketsObj: ListTickets;
   loading: boolean;
-  error: unknown;
+  error: string | null;
   searchId: string;
   quantityRequest: number;
 }
@@ -33,7 +33,7 @@ const ticketSlice = createSlice({
 
     searchIdFetchingError: (
       state: TicketState,
-      action: PayloadAction<unknown>,
+      action: PayloadAction<string>,
     ) => {
       state.error = action.payload;
       state.loading = false;
@@ -43,7 +43,6 @@ const ticketSlice = createSlice({
       action: PayloadAction<string>,
     ) => {
       state.searchId = action.payload;
-      state.loading = false;
     },
 
     ticketsFetchingSuccess: (
