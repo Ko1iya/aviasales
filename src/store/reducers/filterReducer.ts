@@ -1,7 +1,7 @@
 import { createSlice } from '@reduxjs/toolkit';
-import { filterState } from '@/types/typesRedux';
+import { FilterState } from '@/types/typesRedux';
 
-const initialState: filterState = {
+const initialState: FilterState = {
   all: true,
   without: true,
   one: true,
@@ -9,7 +9,7 @@ const initialState: filterState = {
   three: true,
 };
 
-function returnFilterState(state: filterState, filter: string): filterState {
+function returnFilterState(state: FilterState, filter: string): FilterState {
   const newValue = (): boolean => state[filter];
 
   if (filter === 'all') {

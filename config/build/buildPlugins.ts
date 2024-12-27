@@ -27,7 +27,13 @@ export function buildPlugins(env: BuildOptions): Configuration['plugins'] {
   ];
 
   if (isDev) {
-    plugins.push(new ForkTsCheckerWebpackPlugin());
+    plugins.push(
+      new ForkTsCheckerWebpackPlugin({
+        typescript: {
+          memoryLimit: 4096,
+        },
+      }),
+    );
     plugins.push(new ReactRefreshWebpackPlugin());
   }
 

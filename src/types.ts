@@ -19,3 +19,7 @@ export interface ListTickets {
   tickets: Ticket[];
   stop: boolean;
 }
+
+export interface SearchId {
+  searchId: string;
+}

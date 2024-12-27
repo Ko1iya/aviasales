@@ -1,6 +1,5 @@
 import React from 'react';
 import styles from './filterPanel.module.scss';
-// import { filterState } from '@/types/typesRedux';
 import {
   toggleAllSlice,
   toggleOne,
@@ -14,7 +13,6 @@ function FilterPanel() {
   const dispatch = useAppDispatch();
 
   const state = useAppSelector((stateParam) => stateParam.filterReducer);
-  // (curentState: { filter: filterState }) => curentState,
 
   const changeAll = () => {
     dispatch(toggleAllSlice());

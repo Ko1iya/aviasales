@@ -2,15 +2,16 @@ import React from 'react';
 
 import styles from './sortTabs.module.scss';
 
-import { sortToggle } from '@/store/reducers/sortReducer';
+import { sortTicketsFast, sortToggle } from '@/store/reducers/sortReducer';
 import { useAppDispatch, useAppSelector } from '@/hooks/redux';
 
 function SortTabs() {
   const dispatch = useAppDispatch();
 
-  const state = useAppSelector((stateParam) => stateParam.sort);
-
-  const currentSort = state.sort;
+  const { sort: currentSort } = useAppSelector((stateParam) => stateParam.sort);
+  const {
+    ticketsObj: { tickets },
+  } = useAppSelector((stateParam) => stateParam.ticketReducer);
 
   const changeSort = (newState: string) => {
     dispatch(sortToggle(newState));
@@ -21,7 +22,10 @@ function SortTabs() {
       <button
         type="button"
         className={currentSort === 'cheap' ? styles.tabActive : ''}
-        onClick={() => changeSort('cheap')}
+        onClick={() => {
+          changeSort('cheap');
+          dispatch(sortTicketsFast(tickets));
+        }}
       >
         САМЫЙ ДЕШЕВЫЙ
       </button>

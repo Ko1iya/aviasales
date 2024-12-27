@@ -26,7 +26,7 @@ const fetchId = () => async (dispatch: AppDispatch) => {
   }
 };
 
-const fetchSearchId = (searchId: string) => async (dispatch: AppDispatch) => {
+const fetchTickets = (searchId: string) => async (dispatch: AppDispatch) => {
   try {
     const response = await fetch(
       `https://aviasales-test-api.kata.academy/tickets?searchId=${searchId}`,
@@ -43,4 +43,4 @@ const fetchSearchId = (searchId: string) => async (dispatch: AppDispatch) => {
   }
 };
 
-export { fetchId, fetchSearchId };
+export { fetchId, fetchTickets };

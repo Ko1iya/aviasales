@@ -6,7 +6,7 @@ import SortTabs from '../SortTabs/SortTabs';
 import TicketCard from '../TicketCard/TicketCard';
 import styles from './ticketList.module.scss';
 import { useAppDispatch, useAppSelector } from '@/hooks/redux';
-import { fetchId, fetchSearchId } from '@/store/reducers/ActionCreater';
+import { fetchId, fetchTickets } from '@/store/reducers/ActionCreater';
 import { quantityChange } from '@/store/reducers/quantityTicketsReducer';
 import Spinner from '../Spinner/Spinner';
 
@@ -28,7 +28,7 @@ function TicketList() {
       if (state.searchId === '' && mounted) {
         dispatch(fetchId());
       } else if (mounted && ticketsObj.stop === false) {
-        dispatch(fetchSearchId(state.searchId));
+        dispatch(fetchTickets(state.searchId));
       }
     };
 
