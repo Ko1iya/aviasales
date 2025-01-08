@@ -11,21 +11,20 @@ const initialState: FilterState = {
 
 function returnFilterState(state: FilterState, filter: string): FilterState {
   const newValue = (): boolean => state[filter];
+  const numTrueValue: number = Object.keys(state).reduce(
+    (acc, key) => (state[key] ? acc + 1 : acc),
+    0,
+  );
 
   if (filter === 'all') {
     return {
       all: !state.all,
-      without: !state.all,
+      without: true,
       one: !state.all,
       two: !state.all,
       three: !state.all,
     };
   }
-
-  const numTrueValue: number = Object.keys(state).reduce(
-    (acc, key) => (state[key] ? acc + 1 : acc),
-    0,
-  );
 
   if (!state[filter] && numTrueValue === 3) {
     return {

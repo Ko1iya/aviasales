@@ -9,8 +9,9 @@ import { useAppDispatch, useAppSelector } from '@/hooks/redux';
 import { fetchId, fetchTickets } from '@/store/reducers/ActionCreater';
 import { quantityChange } from '@/store/reducers/quantityTicketsReducer';
 import Spinner from '../Spinner/Spinner';
-import { sortTicketsCheap } from '@/store/reducers/sortReducer';
-import { Ticket } from '@/types';
+// import { sortTicketsCheap } from '@/store/reducers/sortReducer';
+// import { Ticket } from '@/types';
+import selectTicketsSort from '@/store/selectors';
 
 function TicketList() {
   const loading = useAppSelector(
@@ -23,36 +24,17 @@ function TicketList() {
   const searchId = useAppSelector(
     (stateParam) => stateParam.ticketReducer.searchId,
   );
-
-  const { sort, ticketsOptimal, ticketsCheap, ticketsFast } = useAppSelector(
-    (stateParam) => stateParam.sort,
-  );
-
-  const quantity = useAppSelector(
-    (stateParam) => stateParam.quantityReducer.quantity,
-  );
-
-  const selectingList = {
-    cheap: ticketsCheap,
-    fast: ticketsFast,
-    optimal: ticketsOptimal,
-  };
-
+  const tickets = useAppSelector(selectTicketsSort);
   const dispatch = useAppDispatch();
 
   useEffect(() => {
     let mounted = true;
-
-    // Проблема в том, что dispatch(sortTicketsFast(ticketsObj.tickets)) выполняется при каждом нажатии сортировки.
 
     const fetchData = () => {
       if (searchId === '' && mounted) {
         dispatch(fetchId());
       } else if (mounted && ticketsObj.stop === false) {
         dispatch(fetchTickets(searchId));
-        dispatch(sortTicketsCheap(ticketsObj.tickets));
-      } else if (mounted && ticketsObj.stop === true) {
-        dispatch(sortTicketsCheap(ticketsObj.tickets));
       }
     };
 
@@ -67,20 +49,9 @@ function TicketList() {
     };
   }, [searchId, ticketsObj, error]);
 
-  function getQuantityTickets(curQuantity: number, ticketsParam: Ticket[]) {
-    const tickets = [];
-
-    for (let i = 0; i < curQuantity && i < ticketsParam.length; i += 1) {
-      const element = ticketsParam[i];
-      tickets.push(element);
-    }
-
-    return tickets;
-  }
-
   const ticketsList = loading ? null : (
     <div className={styles.tickets}>
-      {getQuantityTickets(quantity, selectingList[sort]).map((ticket) => (
+      {tickets.map((ticket) => (
         <TicketCard key={uuidv4()} ticket={ticket} />
       ))}
     </div>
