@@ -19,7 +19,7 @@ function returnFilterState(state: FilterState, filter: string): FilterState {
   if (filter === 'all') {
     return {
       all: !state.all,
-      without: true,
+      without: !state.all,
       one: !state.all,
       two: !state.all,
       three: !state.all,

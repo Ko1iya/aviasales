@@ -27,6 +27,12 @@ function TicketList() {
   const tickets = useAppSelector(selectTicketsSort);
   const dispatch = useAppDispatch();
 
+  const state = useAppSelector((stateParam) => stateParam.filterReducer);
+  const numTrueValue: number = Object.keys(state).reduce(
+    (acc, key) => (state[key] ? acc + 1 : acc),
+    0,
+  );
+
   useEffect(() => {
     let mounted = true;
 
@@ -54,6 +60,9 @@ function TicketList() {
       {tickets.map((ticket) => (
         <TicketCard key={uuidv4()} ticket={ticket} />
       ))}
+      {numTrueValue === 0
+        ? 'Рейсов, подходящих под заданные фильтры, не найдено'
+        : null}
     </div>
   );
 
