@@ -30,7 +30,7 @@ export function buildPlugins(env: BuildOptions): Configuration['plugins'] {
     plugins.push(
       new ForkTsCheckerWebpackPlugin({
         typescript: {
-          memoryLimit: 4096,
+          memoryLimit: 8100,
         },
       }),
     );

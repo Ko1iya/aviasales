@@ -2,16 +2,20 @@ import React from 'react';
 
 import styles from './sortTabs.module.scss';
 
-import { sortTicketsFast, sortToggle } from '@/store/reducers/sortReducer';
+import {
+  sortTicketsFast,
+  sortTicketsOptimal,
+  sortToggle,
+} from '@/store/reducers/sortReducer';
 import { useAppDispatch, useAppSelector } from '@/hooks/redux';
 
 function SortTabs() {
   const dispatch = useAppDispatch();
 
-  const { sort: currentSort } = useAppSelector((stateParam) => stateParam.sort);
-  const {
-    ticketsObj: { tickets },
-  } = useAppSelector((stateParam) => stateParam.ticketReducer);
+  const currentSort = useAppSelector((stateParam) => stateParam.sort.sort);
+  const { tickets } = useAppSelector(
+    (stateParam) => stateParam.ticketReducer.ticketsObj,
+  );
 
   const changeSort = (newState: string) => {
     dispatch(sortToggle(newState));
@@ -24,7 +28,6 @@ function SortTabs() {
         className={currentSort === 'cheap' ? styles.tabActive : ''}
         onClick={() => {
           changeSort('cheap');
-          dispatch(sortTicketsFast(tickets));
         }}
       >
         САМЫЙ ДЕШЕВЫЙ
@@ -32,14 +35,20 @@ function SortTabs() {
       <button
         type="button"
         className={currentSort === 'fast' ? styles.tabActive : ''}
-        onClick={() => changeSort('fast')}
+        onClick={() => {
+          dispatch(sortTicketsFast(tickets));
+          changeSort('fast');
+        }}
       >
         САМЫЙ БЫСТРЫЙ
       </button>
       <button
         type="button"
         className={currentSort === 'optimal' ? styles.tabActive : ''}
-        onClick={() => changeSort('optimal')}
+        onClick={() => {
+          dispatch(sortTicketsOptimal(tickets));
+          changeSort('optimal');
+        }}
       >
         ОПТИМАЛЬНЫЙ
       </button>

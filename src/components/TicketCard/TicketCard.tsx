@@ -50,7 +50,7 @@ function TicketCard(props: TicketCardProps) {
             new Date(arrivalTimeThere),
             'HH:mm',
           )}`}
-          duration={`${flyTimeThere.hours}ч ${flyTimeThere.minutes}м`}
+          duration={`${flyTimeThere.hours}ч ${flyTimeThere.minutes ? flyTimeThere.minutes : '00'}м`}
           stops={ticket.segments[0].stops}
         />
         <FlightSegment
@@ -59,7 +59,7 @@ function TicketCard(props: TicketCardProps) {
             new Date(arrivalTimeReturn),
             'HH:mm',
           )}`}
-          duration={`${flyTimeReturn.hours}ч ${flyTimeReturn.minutes}м`}
+          duration={`${flyTimeReturn.hours}ч ${flyTimeReturn.minutes ? flyTimeReturn.minutes : '00'}м`}
           stops={ticket.segments[1].stops}
         />
       </div>
