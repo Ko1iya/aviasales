@@ -13,6 +13,7 @@ export interface Ticket {
   price: number;
   carrier: string;
   segments: Segment[];
+  key: string;
 }
 
 export interface ListTickets {

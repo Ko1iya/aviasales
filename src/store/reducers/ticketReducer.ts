@@ -1,4 +1,5 @@
 // src/store/reducers/ticketReducer.ts
+import { v4 as uuidv4 } from 'uuid';
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { ListTickets } from '@/types';
 
@@ -50,7 +51,10 @@ const ticketSlice = createSlice({
       action: PayloadAction<ListTickets>,
     ) => {
       const { stop } = action.payload;
-
+      const ticketsWithKey = [...action.payload.tickets].map((ticket) => ({
+        ...ticket,
+        key: uuidv4(),
+      }));
       // For global env PRODUCTION
       // eslint-disable-next-line no-undef
       const countTicket = !PRODUCTION ? 15000 : 2000;
@@ -81,7 +85,7 @@ const ticketSlice = createSlice({
         result = {
           ticketsObj: {
             stop: stoped,
-            tickets: [...action.payload.tickets, ...state.ticketsObj.tickets],
+            tickets: [...ticketsWithKey, ...state.ticketsObj.tickets],
           },
           loading: false,
           error: null,
@@ -90,7 +94,10 @@ const ticketSlice = createSlice({
         };
       } else if (state.ticketsObj.tickets.length === 0) {
         result = {
-          ticketsObj: action.payload,
+          ticketsObj: {
+            stop: stoped,
+            tickets: ticketsWithKey,
+          },
           loading: false,
           error: null,
           searchId: state.searchId,

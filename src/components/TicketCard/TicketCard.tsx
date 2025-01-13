@@ -33,7 +33,7 @@ function TicketCard(props: TicketCardProps) {
   });
 
   return (
-    <div className={styles.ticket}>
+    <li className={styles.ticket}>
       <div className={styles.header}>
         <span className={styles.price}>{ticket.price} P</span>
         <img
@@ -63,7 +63,7 @@ function TicketCard(props: TicketCardProps) {
           stops={ticket.segments[1].stops}
         />
       </div>
-    </div>
+    </li>
   );
 }
 

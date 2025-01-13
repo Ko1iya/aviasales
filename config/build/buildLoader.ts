@@ -51,9 +51,16 @@ export function buildLoader(env: BuildOptions): ModuleOptions['rules'] {
     type: 'asset/resource',
   };
 
+  const svgLoader = {
+    test: /\.svg$/i,
+    type: 'asset/resource',
+    resourceQuery: /url/,
+  };
+
   const svgrLoader = {
     test: /\.svg$/i,
     issuer: /\.[jt]sx?$/,
+    resourceQuery: { not: [/url/] },
     use: [
       {
         loader: '@svgr/webpack',
@@ -74,5 +81,5 @@ export function buildLoader(env: BuildOptions): ModuleOptions['rules'] {
     ],
   };
 
-  return [scssLoader, babelLoader, assetLoader, svgrLoader];
+  return [scssLoader, babelLoader, assetLoader, svgLoader, svgrLoader];
 }

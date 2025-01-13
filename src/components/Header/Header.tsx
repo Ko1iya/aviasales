@@ -1,13 +1,13 @@
+import React from 'react';
 import styles from './header.module.scss';
-import Logo from '@/assets/Logo.svg';
+import logo from '@/assets/Logo.svg?url';
 
 // interface HeaderProps {}
 
 function Header() {
   return (
     <div className={styles.header}>
-      <Logo width={60} height={60} />
-      <img src="" alt="" />
+      <img src={logo} alt="лого" />
     </div>
   );
 }

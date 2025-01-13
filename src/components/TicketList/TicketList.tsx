@@ -1,5 +1,5 @@
 // components/TicketList/TicketList.tsx
-import { v4 as uuidv4 } from 'uuid';
+
 import React, { useEffect } from 'react';
 import FilterPanel from '../FilterPanel/FilterPanel';
 import SortTabs from '../SortTabs/SortTabs';
@@ -56,14 +56,14 @@ function TicketList() {
   }, [searchId, ticketsObj, error]);
 
   const ticketsList = loading ? null : (
-    <div className={styles.tickets}>
+    <ul className={styles.tickets}>
       {tickets.map((ticket) => (
-        <TicketCard key={uuidv4()} ticket={ticket} />
+        <TicketCard key={ticket.key} ticket={ticket} />
       ))}
       {numTrueValue === 0
         ? 'Рейсов, подходящих под заданные фильтры, не найдено'
         : null}
-    </div>
+    </ul>
   );
 
   return (
